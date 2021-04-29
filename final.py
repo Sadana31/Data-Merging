@@ -1,33 +1,41 @@
 import csv
+import pandas as pd
 
-dataset_1 = []
-dataset_2 = []
+file1 = 'data1_sorted.csv'
+file2 = 'data2.csv'
 
-with open("P129/data1.csv","r") as f:
-    csvreader = csv.reader(f)
-    for row in csvreader:
-        dataset_1.append(row)
+dataset1 = []
+dataset2 = []
+with open("P129/data1_sorted.csv",'r') as f:
+    csv_reader =csv.reader(f)
+    
+    for i in csv_reader:
+        dataset1.append(i)
+        
+with open("P129/data2.csv",'r') as f:
+    csv_reader = csv.reader(f)
+    
+    for i in csv_reader:
+        dataset2.append(i)
 
-with open("P129/data2.csv","r") as f:
-    csvreader = csv.reader(f)
-    for row in csvreader:
-        dataset_2.append(row)
+headers1 = dataset1[0]
+headers2 = dataset2[0]
 
-headers_1 = dataset_1[0]
-star_data_1 = dataset_1[1:]
+starsdataset1 = dataset1[1:]
+starsdataset2 = dataset2[1:]
 
-headers_2 = dataset_2[0]
-star_data_2 = dataset_2[1:]
+h = headers1+headers2
 
-headers = headers_1 + headers_2
+starsd =[]
 
-star_data = []
+for i in starsdataset1:
+    starsd.append(i)
+for j in starsdataset2:
+    starsd.append(j)
 
-for index, data_row in enumerate(star_data_1):
-    star_data.append(star_data_1[index] + star_data_2[index])
-    star_data = star_data[star_data[index]]
-
-with open("final.csv","a+") as f:
+with open("total_stars.csv",'w') as f:
     csvwriter = csv.writer(f)
-    csvwriter.writerow(headers)
-    csvwriter.writerow(star_data)
+    csvwriter.writerow(h)   
+    csvwriter.writerows(starsd)
+    
+df = pd.read_csv('total_stars.csv')
